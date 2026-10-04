@@ -1,0 +1,90 @@
+{
+  "users": {
+    "kriptondev": {
+      "id": "kriptondev",
+      "name": "Kripton Dev",
+      "login": "kriptondev",
+      "password": "$2a$10$AMdp2.6dwNx52ew37VIzaOqblimFUcgrRtGuQSgZSOhNHUKMorcU6",
+      "avatar": "img/kripton.jpg",
+      "avatarText": "KD",
+      "avatarColor": "#2f7fff",
+      "bio": "Создатель и владелец Train Messenger",
+      "verified": true,
+      "owner": true,
+      "joined": 1791038209358,
+      "online": false,
+      "lastSeen": 1791039022425
+    }
+  },
+  "chats": {
+    "kriptondev": {}
+  },
+  "messages": {
+    "kriptondev": {}
+  },
+  "posts": [
+    {
+      "id": "post_1791038679377",
+      "from": "kriptondev",
+      "author": {
+        "id": "kriptondev",
+        "name": "Kripton Dev",
+        "login": "kriptondev",
+        "avatar": "img/kripton.jpg",
+        "avatarText": "KD",
+        "avatarColor": "#2f7fff",
+        "bio": "Создатель и владелец Train Messenger",
+        "verified": true,
+        "owner": true,
+        "online": true,
+        "lastSeen": 1791038663551,
+        "joined": 1791038209358
+      },
+      "text": "хуета",
+      "media": [
+        {
+          "url": "uploads/file_1791038678582_ars08f.jpeg",
+          "type": "image/jpeg",
+          "size": 82735,
+          "name": "bg.jpg"
+        }
+      ],
+      "time": 1791038679377,
+      "likes": [],
+      "comments": []
+    }
+  ],
+  "stories": [],
+  "clips": [
+    {
+      "id": "clip_1791038998219",
+      "from": "kriptondev",
+      "author": {
+        "id": "kriptondev",
+        "name": "Kripton Dev",
+        "login": "kriptondev",
+        "avatar": "img/kripton.jpg",
+        "avatarText": "KD",
+        "avatarColor": "#2f7fff",
+        "bio": "Создатель и владелец Train Messenger",
+        "verified": true,
+        "owner": true,
+        "online": true,
+        "lastSeen": 1791038972461,
+        "joined": 1791038209358
+      },
+      "video": "uploads/file_1791038998182_d4tttb.mp4",
+      "title": "ppp",
+      "thumbnail": "",
+      "time": 1791038998219,
+      "likes": [],
+      "views": 0
+    }
+  ],
+  "friends": {
+    "kriptondev": []
+  },
+  "notifications": {
+    "kriptondev": []
+  }
+}
