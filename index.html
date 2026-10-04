@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>Train Messenger</title>
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0a1128">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+
+<!-- ============ SVG ИКОНКИ ============ -->
+<svg style="display:none">
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z" fill="currentColor"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a2 2 0 0 1-2 2h-4v-6h-6v6H5a2 2 0 0 1-2-2z" fill="currentColor"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 11a3 3 0 1 0-3-3 3 3 0 0 0 3 3zm-8 0a3 3 0 1 0-3-3 3 3 0 0 0 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05A4.22 4.22 0 0 1 17 15.5V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" fill="currentColor"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="currentColor"/><path d="M4 21v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2z" fill="currentColor"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65a.5.5 0 0 0 .12-.64l-2-3.46a.5.5 0 0 0-.61-.22l-2.49 1a7.03 7.03 0 0 0-1.69-.98l-.38-2.65A.488.488 0 0 0 14 2h-4a.488.488 0 0 0-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1a.5.5 0 0 0-.61.22l-2 3.46a.5.5 0 0 0 .12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65a.5.5 0 0 0-.12.64l2 3.46c.12.22.39.29.61.22l2.49-1c.52.39 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.22.08.49 0 .61-.22l2-3.46a.5.5 0 0 0-.12-.64zM12 15.5A3.5 3.5 0 1 1 15.5 12 3.5 3.5 0 0 1 12 15.5z" fill="currentColor"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z" fill="currentColor"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z" fill="currentColor"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.47 6.47 0 0 0 1.57-4.23 6.5 6.5 0 1 0-6.5 6.5 6.47 6.47 0 0 0 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z" fill="currentColor"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20z" fill="currentColor"/></symbol>
+  <symbol id="i-dots" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2" fill="currentColor"/><circle cx="6" cy="12" r="2" fill="currentColor"/><circle cx="18" cy="12" r="2" fill="currentColor"/></symbol>
+  <symbol id="i-verified" viewBox="0 0 24 24"><path d="M12 1l3 3h4v4l3 3-3 3v4h-4l-3 3-3-3H5v-4l-3-3 3-3V4h4zM10.5 15.5l5-5-1.41-1.41L10.5 12.67l-2.09-2.08-1.41 1.41z" fill="currentColor"/></symbol>
+  <symbol id="i-crown" viewBox="0 0 24 24"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14z" fill="currentColor"/></symbol>
+  <symbol id="i-clip" viewBox="0 0 24 24"><path d="M16.5 6v11.5a4 4 0 0 1-8 0V5a2.5 2.5 0 0 1 5 0v10.5a1 1 0 0 1-2 0V6H10v9.5a2.5 2.5 0 0 0 5 0V5a4 4 0 0 0-8 0v12.5a5.5 5.5 0 0 0 11 0V6z" fill="currentColor"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="currentColor"/></symbol>
+  <symbol id="i-logout" viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8v-2H4z" fill="currentColor"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z" fill="currentColor"/></symbol>
+  <symbol id="i-at" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 4.94 18.66l-.94-1.76A8 8 0 1 1 20 12v1a2 2 0 0 1-4 0V7h-2v1.5a4.5 4.5 0 1 0 .43 6.5A4 4 0 0 0 22 13v-1A10 10 0 0 0 12 2zm0 12a2.5 2.5 0 1 1 2.5-2.5A2.5 2.5 0 0 1 12 14z" fill="currentColor"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><path d="M18 8h-1V6a5 5 0 0 0-10 0v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2zm-6 9a2 2 0 1 1 2-2 2 2 0 0 1-2 2zm3.1-9H8.9V6a3.1 3.1 0 1 1 6.2 0z" fill="currentColor"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zM12 17a5 5 0 1 1 5-5 5 5 0 0 1-5 5zm0-8a3 3 0 1 0 3 3 3 3 0 0 0-3-3z" fill="currentColor"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M9 2 7.17 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3.17L15 2zm3 15a5 5 0 1 1 5-5 5 5 0 0 1-5 5z" fill="currentColor"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M21 7.28V5a2 2 0 0 0-2-2H5a3 3 0 0 0 0 6h16v8H5a1 1 0 0 1-1-1V7.83A3 3 0 0 0 5 8h16v2h-4a2 2 0 1 0 0 4h4z" fill="currentColor"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" fill="currentColor"/></symbol>
+  <symbol id="i-gift" viewBox="0 0 24 24"><path d="M20 6h-2.18A3 3 0 0 0 13 2.18 3 3 0 0 0 6.18 6H4a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1v9a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-9a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1zm-7-2a1 1 0 1 1-1 1 1 1 0 0 1 1-1zM8 4a1 1 0 1 1 1 1 1 1 0 0 1-1-1zM5 8h6v1H5zm0 4h6v7H5zm8 7v-7h6v7zm6-9h-6V8h6z" fill="currentColor"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5A5.5 5.5 0 0 1 7.5 3 5.5 5.5 0 0 1 12 5.09 5.5 5.5 0 0 1 16.5 3 5.5 5.5 0 0 1 22 8.5c0 3.78-3.4 6.86-8.55 11.54z" fill="currentColor"/></symbol>
+  <symbol id="i-comment" viewBox="0 0 24 24"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z" fill="currentColor"/></symbol>
+  <symbol id="i-ruble" viewBox="0 0 24 24"><path d="M6 4h6.5a4.5 4.5 0 0 1 0 9H8v3h4v2H8v2H6v-2H4v-2h2v-3H4v-2h2zm2 2v5h4.5a2.5 2.5 0 0 0 0-5z" fill="currentColor"/></symbol>
+  <symbol id="i-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="currentColor"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9zM6 20V4h6v5h5v11z" fill="currentColor"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/></symbol>
+  <symbol id="i-check2" viewBox="0 0 24 24"><path d="M18 7l-1.41-1.41-6.34 6.34 1.41 1.41zM22.24 6.59l-11.24 11.24-3.24-3.24-1.41 1.41L11 20.41 23.66 8z" fill="currentColor"/></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z" fill="currentColor"/></symbol>
+  <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M15.41 16.59 10.83 12l4.58-4.59L14 6l-6 6 6 6z" fill="currentColor"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11z" fill="currentColor"/></symbol>
+  <symbol id="i-block" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zM4 12a8 8 0 0 1 8-8 7.95 7.95 0 0 1 4.9 1.68L5.68 16.9A7.95 7.95 0 0 1 4 12zm8 8a7.95 7.95 0 0 1-4.9-1.68L18.32 7.1A7.95 7.95 0 0 1 20 12a8 8 0 0 1-8 8z" fill="currentColor"/></symbol>
+  <symbol id="i-qr" viewBox="0 0 24 24"><path d="M3 11h8V3H3zm2-6h4v4H5zM3 21h8v-8H3zm2-6h4v4H5zM13 3v8h8V3zm6 6h-4V5h4zM19 19h2v2h-2zM13 13h2v2h-2zm2 2h2v2h-2zm-2 2h2v2h-2zm2 2h2v2h-2zm2-2h2v2h-2zm0-4h2v2h-2zm2 2h2v2h-2z" fill="currentColor"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z" fill="currentColor"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z" fill="currentColor"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5z" fill="currentColor"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-6h2zm0-8h-2V7h2z" fill="currentColor"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M14.4 6 14 4H5v17h2v-7h5.6l.4 2h7V6z" fill="currentColor"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2z" fill="currentColor"/></symbol>
+  <symbol id="i-bell-off" viewBox="0 0 24 24"><path d="M20 18.69 7.84 6.14 5.27 3.49 4 4.76l2.8 2.8v.01c-.52.99-.8 2.16-.8 3.42v5l-2 2v1h13.73l2 2 1.27-1.28zM12 22c1.11 0 2-.89 2-2h-4c0 1.11.89 2 2 2zm6-7.32V11c0-3.08-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68c-.15.03-.29.08-.42.12-.1.03-.2.07-.3.11h-.01c-.01 0-.01 0-.02.01-.23.09-.46.2-.68.31 0 0-.01 0-.01.01z" fill="currentColor"/></symbol>
+  <symbol id="i-archive" viewBox="0 0 24 24"><path d="M20.54 5.23 19.15 3.55A1.5 1.5 0 0 0 18 3H6a1.5 1.5 0 0 0-1.16.55L3.46 5.23A2 2 0 0 0 3 6.5V19a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.5a2 2 0 0 0-.46-1.27zM12 17.5 6.5 12H10v-2h4v2h3.5zM5.12 5l.82-1h12l.93 1z" fill="currentColor"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24"><path d="M17 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7zm-5 16a3 3 0 1 1 3-3 3 3 0 0 1-3 3zm3-10H5V5h10z" fill="currentColor"/></symbol>
+  <symbol id="i-reply" viewBox="0 0 24 24"><path d="M9 17H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-4l-4 4v-4z"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+</svg>
+
+<div class="bg-layer"><div class="mesh mesh-1"></div><div class="mesh mesh-2"></div><div class="mesh mesh-3"></div></div>
+
+<!-- ============ АВТОРИЗАЦИЯ ============ -->
+<div class="auth-screen" id="authScreen">
+  <div class="auth-box">
+    <div class="auth-logo">Train</div>
+    <div class="auth-sub">Мессенджер нового поколения</div>
+    <div class="seg">
+      <div class="seg-ind" id="segInd"></div>
+      <button class="seg-btn on" id="tabLogin" onclick="switchAuth('login')">Вход</button>
+      <button class="seg-btn" id="tabReg" onclick="switchAuth('reg')">Регистрация</button>
+    </div>
+    <div id="loginForm">
+      <div class="hint">Логин: <b>kriptondev</b> / Пароль: <b>KriptonDev2026</b></div>
+      <div class="fld"><label>Логин</label><input id="lLogin" type="text" placeholder="Логин"></div>
+      <div class="fld"><label>Пароль</label><input id="lPass" type="password" placeholder="Пароль"></div>
+      <button class="btn" onclick="doLogin()">Войти</button>
+      <div class="msg" id="lMsg"></div>
+    </div>
+    <div id="regForm" class="hide">
+      <div class="fld"><label>Имя</label><input id="rName" placeholder="Имя"></div>
+      <div class="fld"><label>Логин</label><input id="rLogin" placeholder="Латиница 3-20"></div>
+      <div class="fld"><label>Email</label><input id="rEmail" type="email" placeholder="email@example.com"></div>
+      <div class="fld"><label>Пароль</label><input id="rPass" type="password" placeholder="Мин 6"></div>
+      <button class="btn" onclick="doRegister()">Создать</button>
+      <div class="msg" id="rMsg"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ПРИЛОЖЕНИЕ ============ -->
+<div class="app hide" id="app">
+  <aside class="sidebar">
+    <div class="sb-logo">T</div>
+    <nav class="sb-nav">
+      <button class="sb-btn active" data-tab="chats" onclick="switchTab('chats')"><svg viewBox="0 0 24 24" class="ic"><use href="#i-chat"/></svg><span>Чаты</span></button>
+      <button class="sb-btn" data-tab="feed" onclick="switchTab('feed')"><svg viewBox="0 0 24 24" class="ic"><use href="#i-home"/></svg><span>Лента</span></button>
+      <button class="sb-btn" data-tab="friends" onclick="switchTab('friends')"><svg viewBox="0 0 24 24" class="ic"><use href="#i-users"/></svg><span>Друзья</span></button>
+      <button class="sb-btn" data-tab="premium" onclick="switchTab('premium')"><svg viewBox="0 0 24 24" class="ic"><use href="#i-star"/></svg><span>Premium</span></button>
+      <button class="sb-btn" data-tab="gifts" onclick="switchTab('gifts')"><svg viewBox="0 0 24 24" class="ic"><use href="#i-gift"/></svg><span>Подарки</span></button>
+      <button class="sb-btn" data-tab="profile" onclick="switchTab('profile')"><svg viewBox="0 0 24 24" class="ic"><use href="#i-user"/></svg><span>Профиль</span></button>
+      <button class="sb-btn" data-tab="settings" onclick="switchTab('settings')"><svg viewBox="0 0 24 24" class="ic"><use href="#i-settings"/></svg><span>Настройки</span></button>
+    </nav>
+    <button class="sb-btn sb-logout" onclick="doLogout()"><svg viewBox="0 0 24 24" class="ic"><use href="#i-logout"/></svg><span>Выйти</span></button>
+  </aside>
+
+  <main class="main">
+    <section class="tab-panel active" id="tab-chats">
+      <div class="chats-layout">
+        <div class="sub-sidebar">
+          <div class="sub-hdr">
+            <h2>Чаты</h2>
+            <div style="display:flex;gap:6px">
+              <button class="icon-btn" onclick="openGlobalSearch()" title="Поиск"><svg viewBox="0 0 24 24" class="ic"><use href="#i-search"/></svg></button>
+              <button class="icon-btn" onclick="openNewChat()" title="Новый"><svg viewBox="0 0 24 24" class="ic"><use href="#i-plus"/></svg></button>
+            </div>
+          </div>
+          <div class="search-box"><svg viewBox="0 0 24 24" class="ic-sm"><use href="#i-search"/></svg><input id="chatSearch" placeholder="Поиск..." oninput="loadChats()"></div>
+          <div class="chat-list" id="chatList"><div class="empty">Нет чатов</div></div>
+        </div>
+        <div class="chat-view" id="chatView">
+          <div class="welcome" id="chatWelcome"><svg viewBox="0 0 24 24" class="welcome-ic"><use href="#i-chat"/></svg><h3>Выберите чат</h3><p>Или создайте новый</p></div>
+          <div class="chat-active hide" id="chatActive">
+            <div class="chat-hdr">
+              <button class="back-btn hide" id="backBtn" onclick="closeChatMobile()"><svg viewBox="0 0 24 24" class="ic"><use href="#i-back"/></svg></button>
+                 <div class="chat-hdr-info">
+                <div class="av sm" id="chatAv"></div>
+                <div>
+                  <div class="chat-hdr-name" id="chatName"></div>
+                  <div class="chat-hdr-status" id="chatStatus"></div>
+                </div>
+              </div>
+              <button class="icon-btn" onclick="openChatSearch()" title="Поиск в чате"><svg viewBox="0 0 24 24" class="ic"><use href="#i-search"/></svg></button>
+              <button class="icon-btn" onclick="openChatSettings()" title="Настройки"><svg viewBox="0 0 24 24" class="ic"><use href="#i-settings"/></svg></button>
+              <button class="icon-btn" onclick="openChatMenuOptions()" title="Ещё"><svg viewBox="0 0 24 24" class="ic"><use href="#i-dots"/></svg></button>
+            </div>
+            <div class="messages" id="messages"></div>
+            <div class="typing-ind hide" id="typingInd">печатает...</div>
+            <div class="attach-preview hide" id="attachPreview"></div>
+            <div class="input-area">
+              <label class="act-btn" title="Файл"><input type="file" accept="image/*,video/*,.pdf,.zip,.txt,.doc" multiple onchange="attachChatMedia(event)" hidden><svg viewBox="0 0 24 24" class="ic"><use href="#i-clip"/></svg></label>
+              <button class="act-btn" onclick="openPollCreator()" title="Опрос"><svg viewBox="0 0 24 24" class="ic"><use href="#i-chart"/></svg></button>
+              <input id="msgInput" placeholder="Сообщение..." onkeypress="if(event.key==='Enter')sendMessage()" oninput="onTyping()">
+              <button class="act-btn voice-btn" id="voiceBtn" onclick="toggleVoiceRecording()" title="Голосовое"><svg viewBox="0 0 24 24" class="ic"><use href="#i-mic"/></svg><span id="voiceTimer" style="position:absolute;font-size:9px;bottom:-4px;color:var(--danger)"></span></button>
+              <button class="send-btn" onclick="sendMessage()" title="Отправить"><svg viewBox="0 0 24 24" class="ic"><use href="#i-send"/></svg></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="tab-feed">
+      <div class="page-pad">
+        <h2>Лента</h2>
+        <div class="post-creator">
+          <div class="av sm" id="feedAv"></div>
+          <div class="pc-body">
+            <textarea id="postText" placeholder="Что нового?"></textarea>
+            <div id="postPreview" class="post-preview"></div>
+            <div class="pc-actions">
+              <label class="media-btn"><input type="file" accept="image/*,video/*" multiple onchange="attachPostMedia(event)" hidden><svg viewBox="0 0 24 24" class="ic-sm"><use href="#i-camera"/></svg><span>Фото/Видео</span></label>
+              <button class="btn small" onclick="createPost()">Опубликовать</button>
+            </div>
+          </div>
+        </div>
+        <div id="postsList" class="list"></div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="tab-friends">
+      <div class="page-pad">
+        <h2>Друзья</h2>
+        <div class="search-box"><svg viewBox="0 0 24 24" class="ic-sm"><use href="#i-search"/></svg><input id="userSearch" placeholder="Поиск по имени или @логину" oninput="onUserSearchInput()"></div>
+        <div id="friendsList" class="list mt"></div>
+        <div id="requestsList" class="list mt"></div>
+        <div id="searchList" class="list mt"></div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="tab-premium">
+      <div class="page-pad">
+        <h2>Train Premium</h2>
+        <div id="premiumContent"></div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="tab-gifts">
+      <div class="page-pad">
+        <h2>Магазин подарков</h2>
+        <div id="giftsContent"></div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="tab-profile">
+      <div class="page-pad"><h2>Профиль</h2><div class="profile-wrap" id="profileWrap"></div></div>
+    </section>
+
+    <section class="tab-panel" id="tab-settings">
+      <div class="page-pad">
+        <h2>Настройки</h2>
+        <div class="settings-group">
+          <div class="settings-title">Аккаунт</div>
+          <div class="setting-item" onclick="editProfile()"><div class="set-ico"><svg viewBox="0 0 24 24" class="ic-sm"><use href="#i-edit"/></svg></div><div class="set-txt"><div class="set-name">Имя и фото</div><div class="set-sub">Изменить профиль</div></div><svg class="ic-sm arrow" viewBox="0 0 24 24"><use href="#i-arrow-right"/></svg></div>
+          <div class="setting-item" onclick="changeBio()"><div class="set-ico"><svg viewBox="0 0 24 24" class="ic-sm"><use href="#i-edit"/></svg></div><div class="set-txt"><div class="set-name">О себе</div><div class="set-sub">Описание профиля</div></div><svg class="ic-sm arrow" viewBox="0 0 24 24"><use href="#i-arrow-right"/></svg></div>
+          <div class="setting-item" onclick="showMyQR()"><div class="set-ico"><svg viewBox="0 0 24 24" class="ic-sm"><use href="#i-qr"/></svg></div><div class="set-txt"><div class="set-name">Мой QR</div><div class="set-sub">Поделиться профилем</div></div><svg class="ic-sm arrow" viewBox="0 0 24 24"><use href="#i-arrow-right"/></svg></div>
+        </div>
+        <div class="settings-group">
+          <div class="settings-title">Баланс</div>
+          <div class="setting-item" onclick="showWallet()"><div class="set-ico"><svg viewBox="0 0 24 24" class="ic-sm"><use href="#i-wallet"/></svg></div><div class="set-txt"><div class="set-name">Кошелёк</div><div class="set-sub" id="balanceLabel">0 ₽</div></div><svg class="ic-sm arrow" viewBox="0 0 24 24"><use href="#i-arrow-right"/></svg></div>
+          <div class="setting-item" onclick="showPremium()"><div class="set-ico"><svg viewBox="0 0 24 24" class="ic-sm"><use href="#i-star"/></svg></div><div class="set-txt"><div class="set-name">Train Premium</div><div class="set-sub" id="premiumLabel">Купить за 500 ₽</div></div><svg class="ic-sm arrow" viewBox="0 0 24 24"><use href="#i-arrow-right"/></svg></div>
+          <div class="setting-item" onclick="switchTab('gifts')"><div class="set-ico"><svg viewBox="0 0 24 24" class="ic-sm"><use href="#i-gift"/></svg></div><div class="set-txt"><div class="set-name">Магазин подарков</div></div><svg class="ic-sm arrow" viewBox="0 0 24 24"><use href="#i-arrow-right"/></svg></div>
+        </div>
+        <div class="settings-group">
+          <div class="settings-title">Мои данные</div>
+          <div class="setting-item" onclick="showSaved()"><div class="set-ico"><svg viewBox="0 0 24 24" class="ic-sm"><use href="#i-save"/></svg></div><div class="set-txt"><div class="set-name">Избранное</div><div class="set-sub">Сохранённые сообщения</div></div><svg class="ic-sm arrow" viewBox="0 0 24 24"><use href="#i-arrow-right"/></svg></div>
+          <div class="setting-item" onclick="showNotes()"><div class="set-ico"><svg viewBox="0 0 24 24" class="ic-sm"><use href="#i-edit"/></svg></div><div class="set-txt"><div class="set-name">Заметки</div><div class="set-sub">Личные записи</div></div><svg class="ic-sm arrow" viewBox="0 0 24 24"><use href="#i-arrow-right"/></svg></div>
+          <div class="setting-item" onclick="claimDaily()"><div class="set-ico"><svg viewBox="0 0 24 24" class="ic-sm"><use href="#i-gift"/></svg></div><div class="set-txt"><div class="set-name">Ежедневный бонус</div><div class="set-sub">Забрать награду</div></div><svg class="ic-sm arrow" viewBox="0 0 24 24"><use href="#i-arrow-right"/></svg></div>
+        </div>
+        <div class="settings-group">
+          <div class="settings-title">Оформление</div>
+          <div class="setting-item" onclick="toggleTheme()"><div class="set-ico"><svg viewBox="0 0 24 24" class="ic-sm"><use href="#i-eye"/></svg></div><div class="set-txt"><div class="set-name">Тёмная тема</div><div class="set-sub">Светлая / Тёмная</div></div><div class="toggle" id="themeToggle"></div></div>
+        </div>
+        <div class="settings-group">
+          <div class="settings-title">Приватность</div>
+          <div class="setting-item" onclick="showBlacklist()"><div class="set-ico"><svg viewBox="0 0 24 24" class="ic-sm"><use href="#i-block"/></svg></div><div class="set-txt"><div class="set-name">Чёрный список</div></div><svg class="ic-sm arrow" viewBox="0 0 24 24"><use href="#i-arrow-right"/></svg></div>
+        </div>
+        <div class="settings-group">
+          <div class="settings-title">Прочее</div>
+          <div class="setting-item danger" onclick="doLogout()"><div class="set-ico"><svg viewBox="0 0 24 24" class="ic-sm"><use href="#i-logout"/></svg></div><div class="set-txt"><div class="set-name">Выйти</div></div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="mob-nav">
+    <button class="mob-btn active" data-tab="chats" onclick="switchTab('chats')"><svg viewBox="0 0 24 24" class="ic-lg"><use href="#i-chat"/></svg><span>Чаты</span></button>
+    <button class="mob-btn" data-tab="feed" onclick="switchTab('feed')"><svg viewBox="0 0 24 24" class="ic-lg"><use href="#i-home"/></svg><span>Лента</span></button>
+    <button class="mob-btn" data-tab="gifts" onclick="switchTab('gifts')"><svg viewBox="0 0 24 24" class="ic-lg"><use href="#i-gift"/></svg><span>Подарки</span></button>
+    <button class="mob-btn" data-tab="premium" onclick="switchTab('premium')"><svg viewBox="0 0 24 24" class="ic-lg"><use href="#i-star"/></svg><span>Premium</span></button>
+    <button class="mob-btn" data-tab="profile" onclick="switchTab('profile')"><svg viewBox="0 0 24 24" class="ic-lg"><use href="#i-user"/></svg><span>Профиль</span></button>
+  </nav>
+</div>
+
+<!-- МОДАЛКИ -->
+<div class="modal hide" id="newChatModal" onclick="if(event.target===this)closeModal('newChatModal')">
+  <div class="modal-box">
+    <h3>Создать</h3>
+    <div class="fld"><label>Название</label><input id="ncName"></div>
+    <div class="fld"><label>Описание</label><textarea id="ncDesc" rows="2"></textarea></div>
+    <div class="fld"><label>@юзернейм</label><input id="ncUsername" placeholder="trainnews"></div>
+    <div class="fld"><label>Тип</label><select id="ncType"><option value="group">Группа</option><option value="channel">Канал</option></select></div>
+    <div class="modal-actions"><button class="btn ghost" onclick="closeModal('newChatModal')">Отмена</button><button class="btn" onclick="createChat()">Создать</button></div>
+  </div>
+</div>
+
+<div class="modal hide" id="chatSettingsModal" onclick="if(event.target===this)closeModal('chatSettingsModal')">
+  <div class="modal-box"><div id="chatSettingsContent"></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal('chatSettingsModal')">Закрыть</button></div></div>
+</div>
+
+<div class="modal hide" id="userModal" onclick="if(event.target===this)closeModal('userModal')">
+  <div class="modal-box"><div id="userModalContent"></div></div>
+</div>
+
+<div class="modal hide" id="editModal" onclick="if(event.target===this)closeModal('editModal')">
+  <div class="modal-box"><h3>Изменить имя</h3><div class="fld"><input id="epName"></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal('editModal')">Отмена</button><button class="btn" onclick="saveProfile()">OK</button></div></div>
+</div>
+
+<div class="modal hide" id="bioModal" onclick="if(event.target===this)closeModal('bioModal')">
+  <div class="modal-box"><h3>О себе</h3><div class="fld"><textarea id="epBio" rows="3"></textarea></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal('bioModal')">Отмена</button><button class="btn" onclick="saveBio()">OK</button></div></div>
+</div>
+
+<div class="modal hide" id="searchModal" onclick="if(event.target===this)closeModal('searchModal')">
+  <div class="modal-box"><h3>Поиск</h3><div class="search-box"><svg viewBox="0 0 24 24" class="ic-sm"><use href="#i-search"/></svg><input id="globalSearch" placeholder="Имя, @логин..." oninput="onSearchInput()"></div><div id="searchResults" class="mt"></div></div>
+</div>
+
+<div class="modal hide" id="walletModal" onclick="if(event.target===this)closeModal('walletModal')">
+  <div class="modal-box"><div id="walletContent"></div><div class="modal-actions"><button class="btn ghost" onclick="closeModal('walletModal')">Закрыть</button></div></div>
+</div>
+
+<div class="modal hide" id="mediaViewer" onclick="if(event.target===this)closeModal('mediaViewer')">
+  <div class="media-viewer-box" id="mediaViewerContent"></div>
+</div>
+
+<div class="toast hide" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
