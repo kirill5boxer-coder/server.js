@@ -1,5 +1,5 @@
 {
-  "name": "train-messenger",
+  "name": "messenger-server",
   "version": "1.0.0",
   "description": "Train Messenger with Firebase",
   "main": "server.js",
@@ -11,6 +11,7 @@
     "firebase-admin": "^12.7.0",
     "ws": "^8.18.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "jsonwebtoken": "^9.0.2"
   }
 }
